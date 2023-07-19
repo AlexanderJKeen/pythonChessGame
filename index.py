@@ -5,7 +5,7 @@ import pygame as p
 import chessEngine
 
 p.init()
-WIDTH = HEIGHT = 512
+WIDTH = HEIGHT = 900
 DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
@@ -27,6 +27,9 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color("white"))
     gamesState = chessEngine.Gamestate()
+    validMoves = gamesState.getValidMoves()
+    moveMade = False
+
     loadImages() # only do this once 
     sqSelected = ()
     playerClicks = []
@@ -37,7 +40,8 @@ def main():
                 running = False
         # This will control the mouse event handling.
             elif e.type == p.MOUSEBUTTONDOWN:
-                location = p.mouse.get_pos() #() location of mouse
+                location = p.mouse.get_pos() 
+                # location of mouse
                 col = location[0]//SQ_SIZE
                 row = location[1]//SQ_SIZE
                 #After asking myself what would happen if the user clicked the square twice I had to add a way of catching the  miss/wrong click and deal with it.
@@ -49,10 +53,22 @@ def main():
                     playerClicks.append(sqSelected) # this was designed to append both the first and second click
                 if len(playerClicks) == 2: #this will be called after the second click is made causing the move of the piece.
                     move = chessEngine.Move(playerClicks[0], playerClicks[1], gamesState.board)
-                    print(move.getChessNotation())
-                    gamesState.makeMove(move)
+                    if move in validMoves:
+                        gamesState.makeMove(move)
+                        moveMade = True
                     sqSelected = ()
                     playerClicks = []
+        # button press handling
+            elif e.type == p.KEYDOWN:
+                #this will listen for the z key to be pressed
+                if e.key == p.K_z: 
+                    #This will undo a move using the function that is called from the GameState class
+                    gamesState.undoMove()
+                    moveMade = True
+
+        if moveMade:
+            validMoves = gamesState.getValidMoves()
+            moveMade = False
 
         drawGameState(screen, gamesState)
         clock.tick(MAX_FPS)
@@ -67,7 +83,7 @@ def drawGameState(screen, gameState):
     drawPieces(screen, gameState.board) 
 
 def drawBoard(screen):
-    colours = [p.Color("white"), p.Color("gray")]
+    colours = [p.Color("red"), p.Color("green")]
     for row in range(DIMENSION):
         for col in range(DIMENSION):
             colour = colours[((row+col)%2)]
@@ -77,6 +93,7 @@ def drawPieces(screen, board):
      for row in range(DIMENSION):
         for col in range(DIMENSION):
             piece = board[row][col]
-            if piece != "--": # This checks it is not an empty square
+            if piece != "--": 
+                # This checks it is not an empty square
                 screen.blit(IMAGES[piece], p.Rect(col*SQ_SIZE, row*SQ_SIZE, SQ_SIZE, SQ_SIZE))
 main()
