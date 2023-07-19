@@ -28,11 +28,32 @@ def main():
     screen.fill(p.Color("white"))
     gamesState = chessEngine.Gamestate()
     loadImages() # only do this once 
+    sqSelected = ()
+    playerClicks = []
     running = True
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+        # This will control the mouse event handling.
+            elif e.type == p.MOUSEBUTTONDOWN:
+                location = p.mouse.get_pos() #() location of mouse
+                col = location[0]//SQ_SIZE
+                row = location[1]//SQ_SIZE
+                #After asking myself what would happen if the user clicked the square twice I had to add a way of catching the  miss/wrong click and deal with it.
+                if sqSelected == (row,col):
+                    sqSelected = () # deselect
+                    playerClicks = [] #clear player clicks
+                else:
+                    sqSelected = (row,col)
+                    playerClicks.append(sqSelected) # this was designed to append both the first and second click
+                if len(playerClicks) == 2: #this will be called after the second click is made causing the move of the piece.
+                    move = chessEngine.Move(playerClicks[0], playerClicks[1], gamesState.board)
+                    print(move.getChessNotation())
+                    gamesState.makeMove(move)
+                    sqSelected = ()
+                    playerClicks = []
+
         drawGameState(screen, gamesState)
         clock.tick(MAX_FPS)
         p.display.flip()

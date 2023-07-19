@@ -19,4 +19,40 @@ class Gamestate():
         ]
 
         self.whiteToMove = True
-        self.moving = []
+        self.moveRecording = []
+
+    def makeMove(self, move):
+        self.board[move.startRow][move.startCol] = "--"
+        self.board[move.endRow][move.endCol] = move.pieceMoved
+        # this will record all move made.
+        self.moveRecording.append(move) 
+        #this will allow players to switch turns
+        self.whiteToMove = not self.whiteToMove
+
+
+class Move():
+    #I want to map the board to match a real chess board and so I am mapping the ranks of chess board to row and the columns to files.
+    # Adding a key e.g. desiered key equalling current value key:value
+
+    ranks = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
+
+    rowsToRanks = {v:k for k, v in ranks.items()}
+    files = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h":7}
+
+    colsToFiles = {v:k for k, v in files.items()}
+
+
+    def __init__(self, startSq, endSq, board):
+        self.startRow   = startSq[0]
+        self.startCol   = startSq[1]
+        self.endRow     = endSq[0]
+        self.endCol     = endSq[1]
+        self.pieceMoved = board[self.startRow][self.startCol]
+        self.pieceTaken = board[self.endRow][self.endCol]
+
+    def getChessNotation(self):
+        return self.getRankAndFile(self.startRow, self.startCol) + self.getRankAndFile(self.endRow, self.endCol)
+
+
+    def getRankAndFile(self, row, col):
+        return self.colsToFiles[col] + self.rowsToRanks[row]
