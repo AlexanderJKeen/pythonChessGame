@@ -56,8 +56,11 @@ def main():
                     if move in validMoves:
                         gamesState.makeMove(move)
                         moveMade = True
-                    sqSelected = ()
-                    playerClicks = []
+                        sqSelected = ()
+                        playerClicks = []
+                    else:
+                        playerClicks = [sqSelected]
+
         # button press handling
             elif e.type == p.KEYDOWN:
                 #this will listen for the z key to be pressed
@@ -83,7 +86,7 @@ def drawGameState(screen, gameState):
     drawPieces(screen, gameState.board) 
 
 def drawBoard(screen):
-    colours = [p.Color("red"), p.Color("green")]
+    colours = [p.Color("white"), p.Color("light gray")]
     for row in range(DIMENSION):
         for col in range(DIMENSION):
             colour = colours[((row+col)%2)]

@@ -22,6 +22,10 @@ class Gamestate():
 
         self.whiteToMove = True
         self.moveRecording = []
+        self.whiteKingLocation = (7, 4)
+        self.blackKingLocation = (0, 4)
+        self.checkMate = False
+        self.staleMate = False
 
     def makeMove(self, move):
         self.board[move.startRow][move.startCol] = "--"
@@ -30,6 +34,11 @@ class Gamestate():
         self.moveRecording.append(move) 
         #this will allow players to switch turns
         self.whiteToMove = not self.whiteToMove
+        # This if will now allow the kings location to be updated and monitored by the application.
+        if move.pieceMoved == "wK":
+            self.whiteKingLocation = (move.endRow, move.endCol)
+        elif move.pieceMoved == "bK":
+            self.blackKingLocation = (move.endRow, move.endCol)
 
     # I want the ability to undo a move that may have been made by mistake.
 
@@ -43,9 +52,58 @@ class Gamestate():
             self.board[move.endRow][move.endCol] = move.pieceTaken
             # The turn will then be switched back 
             self.whiteToMove = not self.whiteToMove
+            # This will now undo the Kings location to match the players UI
+            if move.pieceMoved == "wK":
+                self.whiteKingLocation = (move.startRow, move.startCol)
+            elif move.pieceMoved == "bK":
+                self.blackKingLocation = (move.startRow, move.startCol)
 
     def getValidMoves(self):
-        return self.getAllPossibleMoves()
+        # Generate all moves
+        moves = self.getAllPossibleMoves()
+        #for each of those moves make a move
+        #going back through the list allows the list to be 
+        #far more reliable as when an item is removed from the list the ordinal number shift wont effect the next iteration through the list.
+        for i in range(len(moves)-1, -1, -1):
+            self.makeMove(moves[i])
+        #generate all opponents moves
+        #for each of your opponents moves, see if they attack your king
+        # As the makeMove function completes by switching the turns of the player I must switch the turns once again or the inCheck function
+        # will check if the person who just moved is in check not the opponent.
+            self.whiteToMove = not self.whiteToMove
+            if self.inCheck():
+            #cannot attack the king 
+                moves.remove(moves[i])
+            self.whiteToMove = not self.whiteToMove
+            self.undoMove()
+        if len(moves) == 0:
+            if self.inCheck():
+                self.checkMate = True
+            else:
+                self.staleMate = True
+        else:
+            self.checkMate = False
+            self.staleMate = False
+        
+        #if they do, it is not a valid move.
+        return moves
+    
+    def inCheck(self):
+        if self.whiteToMove:
+            return self.squareUnderAttack(self.whiteKingLocation[0], self.whiteKingLocation[1])
+        else:
+            return self.squareUnderAttack(self.blackKingLocation[0], self.blackKingLocation[1])
+        pass
+        
+    def squareUnderAttack(self, row, col):
+        self.whiteToMove = not self.whiteToMove
+        opponentsMoves = self.getAllPossibleMoves()
+        self.whiteToMove = not self.whiteToMove
+        for move in opponentsMoves:
+            if move.endRow == row and move.endCol == col:
+                return True
+        return False 
+        
                 
     def getAllPossibleMoves(self):
         moves = []
@@ -168,9 +226,6 @@ class Gamestate():
                 endPiece = self.board[endRow][endCol]
                 if endPiece[0] != allyColour:
                     moves.append(Move((row, col), (endRow, endCol), self.board))
-
-
-
 
 class Move():
     #I want to map the board to match a real chess board and so I am mapping the ranks of chess board to row and the columns to files.
