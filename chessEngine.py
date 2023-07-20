@@ -40,6 +40,11 @@ class Gamestate():
         elif move.pieceMoved == "bK":
             self.blackKingLocation = (move.endRow, move.endCol)
 
+        # promoting a pawn
+        if move.pawnPromotion:
+            # This will retrieve the colour of the piece i.e 'b'
+            self.board[move.endRow][move.endCol] = move.pieceMoved[0] + "Q"
+
     # I want the ability to undo a move that may have been made by mistake.
 
     def undoMove(self):
@@ -93,7 +98,6 @@ class Gamestate():
             return self.squareUnderAttack(self.whiteKingLocation[0], self.whiteKingLocation[1])
         else:
             return self.squareUnderAttack(self.blackKingLocation[0], self.blackKingLocation[1])
-        pass
         
     def squareUnderAttack(self, row, col):
         self.whiteToMove = not self.whiteToMove
@@ -221,7 +225,7 @@ class Gamestate():
         allyColour = "w" if self.whiteToMove else "b"
         for i in range(8):
             endRow = row + kingMoves[i][0]
-            endCol = row + kingMoves[i][1]
+            endCol = col + kingMoves[i][1]
             if 0 <= endRow < 8 and 0 <= endCol < 8:
                 endPiece = self.board[endRow][endCol]
                 if endPiece[0] != allyColour:
@@ -246,6 +250,9 @@ class Move():
         self.endCol     = endSq[1]
         self.pieceMoved = board[self.startRow][self.startCol]
         self.pieceTaken = board[self.endRow][self.endCol]
+        self.pawnPromotion = False
+        if (self.pieceMoved == "wP" and self.endRow == 0) or (self.pieceMoved == "bP" and self.endRow == 7):
+            self.pawnPromotion = True
         # This will give each move a unique ID acting as a hash function creating a 4 digit number displaying each number .
         self.moveId     = self.startCol * 1000 + self.startCol * 100 + self.endRow * 10 + self.endCol
 

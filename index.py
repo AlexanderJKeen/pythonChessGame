@@ -53,12 +53,13 @@ def main():
                     playerClicks.append(sqSelected) # this was designed to append both the first and second click
                 if len(playerClicks) == 2: #this will be called after the second click is made causing the move of the piece.
                     move = chessEngine.Move(playerClicks[0], playerClicks[1], gamesState.board)
-                    if move in validMoves:
-                        gamesState.makeMove(move)
-                        moveMade = True
-                        sqSelected = ()
-                        playerClicks = []
-                    else:
+                    for i in range(len(validMoves)):
+                        if move == validMoves[i]:
+                            gamesState.makeMove(move)
+                            moveMade = True
+                            sqSelected = ()
+                            playerClicks = []
+                    if not moveMade:
                         playerClicks = [sqSelected]
 
         # button press handling
