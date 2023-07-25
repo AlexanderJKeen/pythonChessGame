@@ -1,52 +1,56 @@
-# This class is responcible for storing all the info about the current state of a chess game. 
-#It will also be responcible for determining the valid moves at the current state. It will also keep a move log.
-
-class Gamestate():
+class GameModel:
     def __init__(self):
+        self.DIMENSION = 8
         #board is an 8 x 8 2d list, each element of the list has 2 
         # character, the first character represents the colour of the piece,
         #'b' or 'w', and the second letter represenst the piece i.e 'R' = 'Rook' etc.
         #the -- represents and empty space.
         self.board =[
-            ["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
-            ["bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"],
-            ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"]
+            ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+            ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+            ['--', '--', '--', '--', '--', '--', '--', '--'],
+            ['--', '--', '--', '--', '--', '--', '--', '--'],
+            ['--', '--', '--', '--', '--', '--', '--', '--'],
+            ['--', '--', '--', '--', '--', '--', '--', '--'],
+            ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+            ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']
         ]
 
-        self.moveFunctions = {"P": self.getPawnMoves, "R": self.getRookMoves, "N": self.getKnightMoves, "B": self.getBishopMoves, "Q": self.getQueenMoves, "K": self.getKingMoves}
-
+        self.moveFunctions = {
+            'P': self.getPawnMoves, 
+            'R': self.getRookMoves, 
+            'N': self.getKnightMoves, 
+            'B': self.getBishopMoves, 
+            'Q': self.getQueenMoves, 
+            'K': self.getKingMoves
+        }
+        
         self.whiteToMove = True
         self.moveRecording = []
         self.whiteKingLocation = (7, 4)
         self.blackKingLocation = (0, 4)
         self.checkMate = False
         self.staleMate = False
-
+    
     def makeMove(self, move):
-        self.board[move.startRow][move.startCol] = "--"
+        self.board[move.startRow][move.startCol] = '--'
         self.board[move.endRow][move.endCol] = move.pieceMoved
         # this will record all move made.
         self.moveRecording.append(move) 
         #this will allow players to switch turns
         self.whiteToMove = not self.whiteToMove
         # This if will now allow the kings location to be updated and monitored by the application.
-        if move.pieceMoved == "wK":
+        if move.pieceMoved == 'wK':
             self.whiteKingLocation = (move.endRow, move.endCol)
-        elif move.pieceMoved == "bK":
+        elif move.pieceMoved == 'bK':
             self.blackKingLocation = (move.endRow, move.endCol)
 
         # promoting a pawn
         if move.pawnPromotion:
             # This will retrieve the colour of the piece i.e 'b'
-            self.board[move.endRow][move.endCol] = move.pieceMoved[0] + "Q"
+            self.board[move.endRow][move.endCol] = move.pieceMoved[0] + 'Q'
 
     # I want the ability to undo a move that may have been made by mistake.
-
     def undoMove(self):
         #first I want to check if there is a move to undo
         if len(self.moveRecording) != 0:
@@ -58,10 +62,11 @@ class Gamestate():
             # The turn will then be switched back 
             self.whiteToMove = not self.whiteToMove
             # This will now undo the Kings location to match the players UI
-            if move.pieceMoved == "wK":
+            if move.pieceMoved == 'wK':
                 self.whiteKingLocation = (move.startRow, move.startCol)
-            elif move.pieceMoved == "bK":
-                self.blackKingLocation = (move.startRow, move.startCol)
+            elif move.pieceMoved == 'bK':
+                self.blackKingLocation = (move.startRow, move.startCol)            
+
 
     def getValidMoves(self):
         # Generate all moves
@@ -85,13 +90,30 @@ class Gamestate():
             if self.inCheck():
                 self.checkMate = True
             else:
-                self.staleMate = True
-        else:
-            self.checkMate = False
-            self.staleMate = False
-        
-        #if they do, it is not a valid move.
+                self.staleMate = True      
         return moves
+    
+    def movePiece(self, start_square, end_square):
+        start_row, start_col = start_square
+        end_row, end_col = end_square
+
+        piece = self.board[start_row][start_col]
+        dest_piece = self.board[end_row][end_col]
+
+        if piece == "--":
+            return None
+
+        if (self.whiteToMove and piece[0] != 'w') or (not self.whiteToMove and piece[0] != 'b'):
+            return None
+
+        move = Move(start_square, end_square, self.board)
+        moves = self.getValidMoves()
+        if move in moves:
+            return move
+        return None
+    
+    def isValidSquare(self, row, col):
+        return 0 <= row < self.DIMENSION and 0 <= col < self.DIMENSION
     
     def inCheck(self):
         if self.whiteToMove:
@@ -114,53 +136,50 @@ class Gamestate():
         # This could have an 8 passed through considering I know the board has a length of 8 but I am trying to cut out magic numbers where I can.
         for row in range(len(self.board)):
             for col in range(len(self.board[row])):
-                #This will check the first character of a given space on the board and it will either be "w" for white, "b" for black or "-" for empty. 
+                #This will check the first character of a given space on the board and it will either be 'w' for white, 'b' for black or '-' for empty. 
                 turn = self.board[row][col][0]
-                if(turn == "w" and self.whiteToMove) or (turn == "b" and not self.whiteToMove):
+                if(turn == 'w' and self.whiteToMove) or (turn == 'b' and not self.whiteToMove):
                     piece = self.board[row][col][1]
                     # by using the moveFunction dictionary I was able to reduce the amount of code I would need if I used an if statement to select each pieces move function.
                     self.moveFunctions[piece](row, col, moves)
         return moves
                         
-    def getPawnMoves(self, row, col, moves):
+    def getPawnMoves(self, row, col, move):
         if self.whiteToMove:
             #if the pawn moves one square forward.
-            if self.board[row-1][col] == "--":
-                moves.append(Move((row, col), (row-1, col), self.board))
+            if self.board[row - 1][col] == '--':
+                move.append(Move((row, col), (row-1, col), self.board))
                 #if the pawn moves two spaces forward
-                if row == 6 and self.board[row-2][col] == "--":
-                    moves.append(Move((row, col),(row - 2, col), self.board))
+                if row == 6 and self.board[row-2][col] == '--':
+                    move.append(Move((row, col),(row - 2, col), self.board))
             # take pieces to the left
             if col-1 >= 0:
-                if self.board[row-1][col-1][0] == "b":
-                    moves.append(Move((row, col), (row-1, col-1), self.board))
+                if self.board[row - 1][col - 1][0] == 'b':
+                    move.append(Move((row, col), (row-1, col-1), self.board))
             # take pieces to the right
             if col+1 <= 7:
-                if self.board[row-1][col+1][0] == "b":
-                    moves.append(Move((row, col), (row-1, col+1), self.board))
-        # this will be the black moves
+                if self.board[row - 1][col + 1][0] == 'b':
+                    move.append(Move((row, col), (row-1, col+1), self.board))
         else:
             #if the pawn moves one square forward.
-            if self.board[row + 1][col] == "--":
-                moves.append(Move((row, col), (row + 1, col), self.board))
+            if self.board[row + 1][col] == '--':
+                move.append(Move((row, col), (row + 1, col), self.board))
                 #if the pawn moves two spaces forward
-                if row == 1 and self.board[row + 2][col] == "--":
-                    moves.append(Move((row, col),(row + 2, col), self.board))
+                if row == 1 and self.board[row + 2][col] == '--':
+                    move.append(Move((row, col),(row + 2, col), self.board))
             # take pieces to the left
             if col - 1 >= 0:
-                if self.board[row + 1][col - 1][0] == "w":
-                    moves.append(Move((row, col), (row + 1, col - 1), self.board))
+                if self.board[row + 1][col - 1][0] == 'w':
+                    move.append(Move((row, col), (row + 1, col - 1), self.board))
             # take pieces to the right
             if col + 1 <= 7:
-                if self.board[row + 1][col + 1][0] == "w":
-                    moves.append(Move((row, col), (row + 1, col + 1), self.board))
+                if self.board[row + 1][col + 1][0] == 'w':
+                    move.append(Move((row, col), (row + 1, col + 1), self.board))
 
-
-
-    def getRookMoves(self, row, col, moves):
+    def getRookMoves(self, row, col, move):
         directions = ((-1, 0),(0, -1),(1, 0),(0, 1))
         # python turnery statement
-        enemyColour = "b" if self.whiteToMove else "w"
+        enemyColour = 'b' if self.whiteToMove else 'w'
 
         for d in directions:
             for i in range(1,8):
@@ -168,10 +187,10 @@ class Gamestate():
                 endCol = col + d[1] * i
                 if 0 <= endRow < 8 and 0 <= endCol < 8:
                     endPiece = self.board[endRow][endCol]
-                    if endPiece == "--":
-                        moves.append(Move((row, col), (endRow, endCol), self.board))
+                    if endPiece == '--':
+                        move.append(Move((row, col), (endRow, endCol), self.board))
                     elif endPiece[0] == enemyColour:
-                        moves.append(Move((row, col), (endRow, endCol), self.board))
+                        move.append(Move((row, col), (endRow, endCol), self.board))
                         break
                     # if its a friendly piece
                     else:
@@ -179,22 +198,22 @@ class Gamestate():
                 else:
                     break
     
-    def getKnightMoves(self, row, col, moves):
+    def getKnightMoves(self, row, col, move):
         knightMoves = ((-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1))
-        allyColour = "w" if self.whiteToMove else "b"
+        allyColour = 'w' if self.whiteToMove else 'b'
         for n in knightMoves:
             endRow = row + n[0]
             endCol = col + n[1]
             if 0 <= endRow < 8 and 0 <= endCol < 8 :
                 endPiece = self.board[endRow][endCol] 
                 if endPiece[0] != allyColour:
-                    moves.append(Move((row, col), (endRow, endCol), self.board))
+                    move.append(Move((row, col), (endRow, endCol), self.board))
 
 
-    def getBishopMoves(self, row, col, moves):
+    def getBishopMoves(self, row, col, move):
         directions = ((-1, -1),(-1, 1),(1, -1),(1, 1))
         # python turnery statement
-        enemyColour = "b" if self.whiteToMove else "w"
+        enemyColour = 'b' if self.whiteToMove else 'w'
 
         for d in directions:
             for i in range(1,8):
@@ -202,10 +221,10 @@ class Gamestate():
                 endCol = col + d[1] * i
                 if 0 <= endRow < 8 and 0 <= endCol < 8:
                     endPiece = self.board[endRow][endCol]
-                    if endPiece == "--":
-                        moves.append(Move((row, col), (endRow, endCol), self.board))
+                    if endPiece == '--':
+                        move.append(Move((row, col), (endRow, endCol), self.board))
                     elif endPiece[0] == enemyColour:
-                        moves.append(Move((row, col), (endRow, endCol), self.board))
+                        move.append(Move((row, col), (endRow, endCol), self.board))
                         break
                     # if its a friendly piece
                     else:
@@ -215,30 +234,31 @@ class Gamestate():
 
 # AS the queen has the unique movement of both a rook and a bishop it has no unique moves of its own it is far simpler to use the methods I have already created.
 # Abstraction.
-    def getQueenMoves(self, row, col, moves):
-        self.getBishopMoves(row, col, moves)
-        self.getRookMoves(row, col, moves)
+    def getQueenMoves(self, row, col, move):
+        self.getBishopMoves(row, col, move)
+        self.getRookMoves(row, col, move)
 
 
-    def getKingMoves(self, row, col, moves):
+    def getKingMoves(self, row, col, move):
         kingMoves = ((-1, -1),(-1, 0),(-1, 1),(0, -1),(0, 1),(1, -1),(1, 0),(1, 1))
-        allyColour = "w" if self.whiteToMove else "b"
+        allyColour = 'w' if self.whiteToMove else 'b'
         for i in range(8):
             endRow = row + kingMoves[i][0]
             endCol = col + kingMoves[i][1]
             if 0 <= endRow < 8 and 0 <= endCol < 8:
                 endPiece = self.board[endRow][endCol]
                 if endPiece[0] != allyColour:
-                    moves.append(Move((row, col), (endRow, endCol), self.board))
+                    move.append(Move((row, col), (endRow, endCol), self.board))
 
+    
 class Move():
     #I want to map the board to match a real chess board and so I am mapping the ranks of chess board to row and the columns to files.
     # Adding a key e.g. desiered key equalling current value key:value
 
-    ranks = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
+    ranks = {'1': 7, '2': 6, '3': 5, '4': 4, '5': 3, '6': 2, '7': 1, '8': 0}
 
     rowsToRanks = {v:k for k, v in ranks.items()}
-    files = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h":7}
+    files = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h':7}
 
     colsToFiles = {v:k for k, v in files.items()}
 
@@ -250,11 +270,10 @@ class Move():
         self.endCol     = endSq[1]
         self.pieceMoved = board[self.startRow][self.startCol]
         self.pieceTaken = board[self.endRow][self.endCol]
-        self.pawnPromotion = False
-        if (self.pieceMoved == "wP" and self.endRow == 0) or (self.pieceMoved == "bP" and self.endRow == 7):
-            self.pawnPromotion = True
+        # pawn promotion section
+        self.pawnPromotion = (self.pieceMoved == 'wP' and self.endRow == 0) or (self.pieceMoved == 'bP' and self.endRow == 7)
         # This will give each move a unique ID acting as a hash function creating a 4 digit number displaying each number .
-        self.moveId     = self.startCol * 1000 + self.startCol * 100 + self.endRow * 10 + self.endCol
+        self.moveId = self.startCol * 1000 + self.startCol * 100 + self.endRow * 10 + self.endCol
 
 # overriding the equals method. As python does know how to calculate what equals is. 
 # The moves generated are the same values they are not the same objects as one was generated by a mouse and the other is stored in the move = [] in getAllPossibleMoves method
