@@ -85,4 +85,4 @@
 
     When creating functions for the game I always looked at creating checks to monitor each user input was within the 
     realms of what I wanted them to be able to do. I therefore added checks that made sure they couldn't do moves such
-    as move 'out of bounds' to interact with pieces ion the opposite perifery such as this check
+    as move 'out of bounds' to interact with pieces ion the opposite perifery such as this check: https://vscode.dev/github/AlexanderJKeen/pythonChessGame/blob/main/gameController.py#L38-L47
