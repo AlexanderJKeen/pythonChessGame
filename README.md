@@ -31,10 +31,10 @@
     loading the images of the pieces. The model contains the the main methods such as the 
     the games working out all possible moves, the method that works out if a square is under 
     attack and if the potential move is into a valid square. Finally the Controller contains
-     the the "control logic" it takes the users choice and then sends it to the model and 
-     then waits for the response to send back to the view e.g after a player moves into a 
-     checkmate position the response from the model will inform the view that the user has 
-     indeed created a checkmate.
+    the the "control logic" it takes the users choice and then sends it to the model and 
+    then waits for the response to send back to the view e.g after a player moves into a 
+    checkmate position the response from the model will inform the view that the user has 
+    indeed created a checkmate.
         
     My initial plan was to create a file that would take advantage of the libary pygame to 
     draw the board and load the images. I decided that I would try and split the chess logic 
@@ -54,3 +54,14 @@
 
 ### Analysis and decomposition of the overall problem into key ‘epic’ style tasks
 
+    I used the website Trello to plan the user stories out. I didn't plan an epic story within the 
+    Trello board as I was working on this as a solo project and overlooked this detail. Reflecting on
+    this I would deffinatly wirte the epic story down as if I were to move forward with this project 
+    in the months to come I might remember the exact context in which I was planning out this game i.e
+    did I want a highly sophisticated chess game or whether it should be more of a simple game. I still 
+    have tickets in the 'TODO' list as I have more ideas on how to improve the code as well as add more
+    features to the game and I will explain this furthur in a later section. 
+
+![TrelloTicket](assets/trelloticket.png)
+
+![TrelloBoard](assets/trelloboard.png)
