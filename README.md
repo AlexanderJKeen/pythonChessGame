@@ -85,4 +85,12 @@
 
     When creating functions for the game I always looked at creating checks to monitor each user input was within the 
     realms of what I wanted them to be able to do. I therefore added checks that made sure they couldn't do moves such
-    as move 'out of bounds' to interact with pieces ion the opposite perifery such as this check: https://vscode.dev/github/AlexanderJKeen/pythonChessGame/blob/main/gameController.py#L38-L47
+    as move 'out of bounds' to interact with pieces on the opposite side as can be seen on line 38 of the gameController.py.
+    I would like to add some try catches into the project and write refactor some code to be more defensive however I felt 
+    that this was out of the scope of the project and intial goal and creating a working minimum viable product.
+
+# Development
+
+### Adoption and use of ‘good’ standards
+
+    
