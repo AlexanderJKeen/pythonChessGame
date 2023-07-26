@@ -98,7 +98,6 @@ class GameModel:
         end_row, end_col = end_square
 
         piece = self.board[start_row][start_col]
-        dest_piece = self.board[end_row][end_col]
 
         if piece == "--":
             return None

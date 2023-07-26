@@ -52,7 +52,7 @@
     much better approach and it is deffinantly something I would consider in future., 
     I will disscuss this in more detail below.
 
-### Analysis and decomposition of the overall problem into key ‘epic’ style tasks
+### D. Analysis and decomposition of the overall problem into key ‘epic’ style tasks
 
     I used the website Trello to plan the user stories out. I didn't plan an epic story within the 
     Trello board as I was working on this as a solo project and overlooked this detail. Reflecting on
@@ -60,8 +60,29 @@
     in the months to come I might remember the exact context in which I was planning out this game i.e
     did I want a highly sophisticated chess game or whether it should be more of a simple game. I still 
     have tickets in the 'TODO' list as I have more ideas on how to improve the code as well as add more
-    features to the game and I will explain this furthur in a later section. 
+    features to the game and I will explain this furthur in a later section. I added extra detail when needed
+    and as you can tell by the trello board, as referenced earlier, I still have improvements to make which I 
+    consider 'Nice to have' but not integeral to the finished product to be submitted.
 
 ![TrelloTicket](assets/trelloticket.png)
 
 ![TrelloBoard](assets/trelloboard.png)
+
+### E. Initial object-oriented design ideas and planned phased breakdown into smaller tasks
+
+    One of the main reasons I wanted to incorperate a 'code, refactor' style of coding is to create flexible , 
+    maintainable and testable code. This is achieveable using the object oriented design and by making use of 
+    technologies such as Trello I was able to break down user stories into manageable tasks. I made use of many 
+    OO princeples while designing this game such as Abstraction, Overriding, Encapsulation and creating classes 
+    and object I will get into more detail later on but these techniques alow me to create good clean code that 
+    can be taken on by another with relative ease.
+
+    I have crteated classes where appropriate such as the Move class which is more important for a specific 
+    task i.e to create the moveId which helps track with the movement of each piece, which I will go into 
+    more detail later on. However, I have taken advantage of other techniques than classes i.e the use of the 
+    dictionarty I chose to create a dictionary as I thought creating a class as a way to avoid an if statement was 
+    'overkill' and so used a dictionary instaed. 
+
+    When creating functions for the game I always looked at creating checks to monitor each user input was within the 
+    realms of what I wanted them to be able to do. I therefore added checks that made sure they couldn't do moves such
+    as move 'out of bounds' to interact with pieces ion the opposite perifery such as this check: https://vscode.dev/github/AlexanderJKeen/pythonChessGame/blob/main/gameController.py#L38-L47
