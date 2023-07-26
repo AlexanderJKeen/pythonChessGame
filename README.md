@@ -2,7 +2,7 @@
 
 # Challenge Outline
 
-# A. Summary and review of the proplem.
+### A. Summary and review of the proplem.
 
     I am creating a Chess Game using Python as the programming language, 
     I will be building a stardard version focusing on creating a simple 
@@ -15,7 +15,7 @@
     I would also be improving the algoryths so the program may be able to think more 
     than one step ahead to show the user the best moves as opposed to all possible moves.
 
-# B.  UML style diagram illustrating initial overall solution.
+### B.  UML style diagram illustrating initial overall solution.
 
-# UML : 
+### UML : 
 (./assets/technical_diagrams.jpg)
