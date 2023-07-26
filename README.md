@@ -18,4 +18,4 @@
 ### B.  UML style diagram illustrating initial overall solution.
 
 ### UML : 
-(./assets/bB.png)
+![UML](assets/technical_diagrams.jpg)
