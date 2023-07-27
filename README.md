@@ -168,15 +168,32 @@
 # 3. Evaluation
 
 ### Code Refactoring
-    In my MVC Chess project, I applied effective code refactoring techniques to improve the overall code design, readability, and maintainability. One key example of code refactoring was the use of a dictionary (self.moveFunctions) to map each piece type to its corresponding move function. This approach made the getValidMoves() method more concise and easier to manage, as it centralised the piece-specific move logic in separate methods. Another successful refactoring was the use of dictionary comprehensions to create rowsToRanks and colsToFiles, which efficiently mapped rank and file values between the board representation and chess notation. These refactoring strategies greatly enhanced the clarity and modularity of my code.
+    In my MVC Chess project, I applied effective code refactoring techniques to improve the overall code design, 
+    readability, and maintainability. One key example of code refactoring was the use of a dictionary 
+    (self.moveFunctions) to map each piece type to its corresponding move function. This approach made the 
+    getValidMoves() method more concise and easier to manage, as it centralised the piece-specific move logic 
+    in separate methods. 
+    Another successful refactoring was the use of dictionary comprehensions to create rowsToRanks and colsToFiles, 
+    which efficiently mapped rank and file values between the board representation and chess notation. 
+    These refactoring strategies greatly enhanced the clarity and modularity of my code.
 
 ### Code Reuse
-    Throughout the MVC Chess project, I endevoured to reuse code helping minimise redundancy and improve efficiency. For instance, I implemented methods like getRookMoves() and getBishopMoves() to calculate legal moves for both the rook and bishop pieces. Reusing these methods in the getQueenMoves() showcased effective code reuse by using the functionalities of both rook and bishop moves. 
+    Throughout the MVC Chess project, I endevoured to reuse code helping minimise redundancy and improve efficiency. 
+    For instance, I implemented methods like getRookMoves() and getBishopMoves() to calculate legal moves for 
+    both the rook and bishop pieces. 
+    Reusing these methods in the getQueenMoves() showcased effective code reuse by using the functionalities 
+    of both rook and bishop moves. 
 
 ![queenMovePic](assets/queenMove.png)
 
-    Additionally, the makeMove() and undoMove() methods were designed to be universally applicable for any chess piece, further enhancing code reuse. By reusing these functions, my code became more streamlined and maintainable, contributing to the overall robustness of the project.
+    Additionally, the makeMove() and undoMove() methods were designed to be universally applicable for any chess piece, 
+    further enhancing code reuse. By reusing these functions, my code became more streamlined and maintainable, 
+    contributing to the overall robustness of the project.
 
 ### Code Smells
 
-    I noticed that the getAllPossibleMoves() method had a high cyclomatic complexity due to nested loops and conditionals. To enhance its maintainability, I took the initiative to refactor this method and simplify its structure. I also made a conscious effort to improve variable naming and method descriptions to enhance the overall code readability and comprehension. By addressing these code smells, I was able to ensure that my project's codebase remained robust, efficient, and maintainable.
+    I noticed that the getAllPossibleMoves() method had a high cyclomatic complexity due to nested loops and conditionals. 
+    To enhance its maintainability, I took the initiative to refactor this method and simplify its structure. 
+    I also made a conscious effort to improve variable naming and method descriptions to enhance the overall code 
+    readability and comprehension. By addressing these code smells, I was able to ensure that my project's codebase 
+    remained robust, efficient, and maintainable.
