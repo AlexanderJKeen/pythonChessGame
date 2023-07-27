@@ -138,10 +138,12 @@
     results and whether the variables I was creating, was being properly passed and handled. e.g: 
 ![Alt text](assets/printEvidence.png)
 
-    The example above shows a small example of this process. I wanted to create a proper notaion so that I could clearly 
-    see the move of the piece. this was important and I wanted to make sure the movement reresented on screen matched
-    the computations behind the screen. I created a notation so each move would show the proper move from the square location moved from to the square location the piece moves to. Changed the oreder of the board to start from 1 and not the ordinal
-    number of 0. using print I was able to see this change not only work but provide data that my visuals were not only 
+    The example above shows a small example of this process. I wanted to create a proper notaion so that 
+    I could clearly see the move of the piece. this was important and I wanted to make sure the movement 
+    reresented on screen matched the computations behind the screen. I created a notation so each move 
+    would show the proper move from the square location moved from to the square location the piece moves to. 
+    Changed the oreder of the board to start from 1 and not the ordinal number of 0. 
+    using print I was able to see this change not only work but provide data that my visuals were not only 
     working but were matching the desiered computaional outcome.
 
     For the debugging I was able to set breakpoints at specific lines where you suspect there might be issues. VS Code 
