@@ -1,6 +1,6 @@
 # Ada Chess Project written in Python
 
-# Challenge Outline
+# 1. Challenge Outline
 
 ### A. Summary and review of the proplem.
 
@@ -90,7 +90,7 @@
     defensive however I felt that this was out of the scope of the project and intial goal and creating a working minimum 
     viable product.
 
-# Development
+# 2. Development
 
 ### A. Adoption and use of ‘good’ standards
 
@@ -107,19 +107,64 @@
 
 ### B. Phase 1 development: tasks, code review and changes
 
-    After each ticket I would look to see if if the code could be refactored to look more readable. As I was using
-    Python, that is known for its readability I focused on trying to crate pure functions such as the isValidSquare 
-    function as well as the move methods i.e getPawnMove. Pure function allow for the code to be easily refactored
-    without impacting on dependant functions/classes. When designing any function or class at work we have many policies
-    we follow and one is to create, as best you can, self containing functions that interact with the code base but that
-    could be refactored without effecting other things that might impact on live costing time and money. This project
-    although non-comercial should get the same level of professionalism. Rather than creating seperate tickets for the 
-    refactoring process I would then move tickets back to the doing list when I was refactoring that code. This, although
-    successful I believe would have been confusing if I was working with other developers and therfore if I  were to do 
-    this again I would have created seperate tickets for each refactor.  
-
-### C. Phase 2 development: tasks, code review and changes
+    After each ticket I would look to see if if the code could be refactored to look more readable. 
+    As I was using Python, that is known for its readability I focused on trying to crate pure functions 
+    such as the isValidSquare function as well as the move methods i.e getPawnMove. Pure function allow 
+    for the code to be easily refactored without impacting on dependant functions/classes. When designing 
+    any function or class at work we have many policies we follow and one is to create, as best you can, 
+    self containing functions that interact with the code base but that could be refactored without effecting 
+    other things that might impact on live costing time and money. This project although non-comercial should 
+    get the same level of professionalism. Rather than creating seperate tickets for the refactoring process 
+    I would then move tickets back to the doing list when I was refactoring that code. This, although
+    successful I believe would have been confusing if I was working with other developers and therfore if I  
+    were to do this again I would have created seperate tickets for each refactor. By refactoring after each ticket
+    I was able to to engage in constant code reviews which kept me trying to keep building my app with the original 
+    design in the forefront of my mind.
     
-    Phase 2 was the organisation of my code. I was determined to refactor my code to create an MVC approach and 
-    so first split the code into the view, model and then controller. As discussed earlier in this read me I 
-    split all graphical methods and constants into the view file such as the drawBoard() and highlightSquare().
+    An example of my refactoring would be this: 
+![RefactorExample](assets/refactorExample.png)
+    The original code 'move in validMoves' checks if 'move' is present in a list of 'validMoves'. Even though this
+    code was functional for its purpose it still needed to search the entire list to find the 'move'. With small 
+    static lists this may be perfectly fine however if this list was to get larger for whatever reason it can be 
+    time consuming and inefficient especially if it needs to be performed multiple times.
+    By creating a loop I was able to reduce some of the complexity, in the worst situation it would take the same 
+    amount of time to complete. However by searching the list until it has found the 'move' it is looking for it will 
+    exit the loop and save computing time therefore the more efficient way of coding.
+
+### C. Ensuring quality through testing and resolving bugs.
+
+    I firstly took advantage or the print machanic in python which allowed me to check if I was getting the disiered 
+    results and whether the variables I was creating, was being properly passed and handled. e.g: 
+![Alt text](assets/printEvidence.png)
+    The example above shows a small example of this process. I wanted to create a proper notaion so that I could clearly 
+    see the move of the piece. this was important and I wanted to make sure the movement reresented on screen matched
+    the computations behind the screen. I created a notation so each move would show the proper move from the square location moved from to the square location the piece moves to. Changed the oreder of the board to start from 1 and not the ordinal
+    number of 0. using print I was able to see this change not only work but provide data that my visuals were not only 
+    working but were matching the desiered computaional outcome.
+
+    For the debugging I was able to set breakpoints at specific lines where you suspect there might be issues. VS Code 
+    will run in debugging mode and I was able to select the python environment option as to make it more specific to my 
+    needs. While debugging, I could inspect the values of variables by hovering the mouse over them, or I could add them to the "Watch" panel to monitor their values throughout the debugging session. I was able to step over or into various code which allowed me to inspect suspected bugs one line at a time. If you reach a point where you believe the code is working correctly, you can continue execution. Using VS Code's debugging tools in this way allowed me to systematically identify and resolve issues within the Chess Game code, ensuring a smoother and error-free gaming experience. This was helpful when
+    assesing if variables where containing the correct information. One of the issues I ran into was during the 'getValidMove'
+    function:
+![ValidMoveFunctionPic](assets/validMoveFunction.png)
+    Through the use of debugging is was able to step into the function I was having an isse with and find that due to 
+    a poor design I had to add duplicate code in the form of the 'whiteToMove' variable/flag. due to the extra functionality
+    such as checking if the moke created a check, checkmate or stalemate I had to make sure that after a move was made it 
+    remained the users turn until the function could check if it matched any of the aforementioned game states. I had to 
+    make sure that each time there was a natural changing of turns i.e after the 'makeMove' function I switched the turns
+    back for a final check on the state of play.
+
+# 3. Evaluation
+
+### Code Refactoring
+    In my MVC Chess project, I applied effective code refactoring techniques to improve the overall code design, readability, and maintainability. One key example of code refactoring was the use of a dictionary (self.moveFunctions) to map each piece type to its corresponding move function. This approach made the getValidMoves() method more concise and easier to manage, as it centralised the piece-specific move logic in separate methods. Another successful refactoring was the use of dictionary comprehensions to create rowsToRanks and colsToFiles, which efficiently mapped rank and file values between the board representation and chess notation. These refactoring strategies greatly enhanced the clarity and modularity of my code.
+
+### Code Reuse
+    Throughout the MVC Chess project, I endevoured to reuse code helping minimise redundancy and improve efficiency. For instance, I implemented methods like getRookMoves() and getBishopMoves() to calculate legal moves for both the rook and bishop pieces. Reusing these methods in the getQueenMoves() showcased effective code reuse by using the functionalities of both rook and bishop moves. 
+![queenMovePic](assets/queenMove.png)
+    Additionally, the makeMove() and undoMove() methods were designed to be universally applicable for any chess piece, further enhancing code reuse. By reusing these functions, my code became more streamlined and maintainable, contributing to the overall robustness of the project.
+
+### Code Smells
+
+    I noticed that the getAllPossibleMoves() method had a high cyclomatic complexity due to nested loops and conditionals. To enhance its maintainability, I took the initiative to refactor this method and simplify its structure. I also made a conscious effort to improve variable naming and method descriptions to enhance the overall code readability and comprehension. By addressing these code smells, I was able to ensure that my project's codebase remained robust, efficient, and maintainable.
