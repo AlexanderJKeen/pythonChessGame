@@ -146,9 +146,12 @@
 
     For the debugging I was able to set breakpoints at specific lines where you suspect there might be issues. VS Code 
     will run in debugging mode and I was able to select the python environment option as to make it more specific to my 
-    needs. While debugging, I could inspect the values of variables by hovering the mouse over them, or I could add them to the "Watch" panel to monitor their values throughout the debugging session. I was able to step over or into various code which allowed me to inspect suspected bugs one line at a time. If you reach a point where you believe the code is working correctly, you can continue execution. Using VS Code's debugging tools in this way allowed me to systematically identify and resolve issues within the Chess Game code, ensuring a smoother and error-free gaming experience. This was helpful when
-    assesing if variables where containing the correct information. One of the issues I ran into was during the 'getValidMove'
-    function:
+    needs. While debugging, I could inspect the values of variables by hovering the mouse over them, 
+    or I could add them to the "Watch" panel to monitor their values throughout the debugging session. I was able 
+    to step over or into various code which allowed me to inspect suspected bugs one line at a time. If you reach 
+    a point where you believe the code is working correctly, you can continue execution. Using VS Code's debugging 
+    tools in this way allowed me to systematically identify and resolve issues within the Chess Game code, ensuring 
+    a smoother and error-free gaming experience. This was helpful when assesing if variables where containing the correct information. One of the issues I ran into was during the 'getValidMove' function:
 
 ![ValidMoveFunctionPic](assets/validMoveFunction.png)
 #
