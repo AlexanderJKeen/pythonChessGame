@@ -123,6 +123,7 @@
     
     An example of my refactoring would be this: 
 ![RefactorExample](assets/refactorExample.png)
+
     The original code 'move in validMoves' checks if 'move' is present in a list of 'validMoves'. Even though this
     code was functional for its purpose it still needed to search the entire list to find the 'move'. With small 
     static lists this may be perfectly fine however if this list was to get larger for whatever reason it can be 
@@ -136,6 +137,7 @@
     I firstly took advantage or the print machanic in python which allowed me to check if I was getting the disiered 
     results and whether the variables I was creating, was being properly passed and handled. e.g: 
 ![Alt text](assets/printEvidence.png)
+
     The example above shows a small example of this process. I wanted to create a proper notaion so that I could clearly 
     see the move of the piece. this was important and I wanted to make sure the movement reresented on screen matched
     the computations behind the screen. I created a notation so each move would show the proper move from the square location moved from to the square location the piece moves to. Changed the oreder of the board to start from 1 and not the ordinal
@@ -147,7 +149,9 @@
     needs. While debugging, I could inspect the values of variables by hovering the mouse over them, or I could add them to the "Watch" panel to monitor their values throughout the debugging session. I was able to step over or into various code which allowed me to inspect suspected bugs one line at a time. If you reach a point where you believe the code is working correctly, you can continue execution. Using VS Code's debugging tools in this way allowed me to systematically identify and resolve issues within the Chess Game code, ensuring a smoother and error-free gaming experience. This was helpful when
     assesing if variables where containing the correct information. One of the issues I ran into was during the 'getValidMove'
     function:
+
 ![ValidMoveFunctionPic](assets/validMoveFunction.png)
+#
     Through the use of debugging is was able to step into the function I was having an isse with and find that due to 
     a poor design I had to add duplicate code in the form of the 'whiteToMove' variable/flag. due to the extra functionality
     such as checking if the moke created a check, checkmate or stalemate I had to make sure that after a move was made it 
@@ -162,7 +166,9 @@
 
 ### Code Reuse
     Throughout the MVC Chess project, I endevoured to reuse code helping minimise redundancy and improve efficiency. For instance, I implemented methods like getRookMoves() and getBishopMoves() to calculate legal moves for both the rook and bishop pieces. Reusing these methods in the getQueenMoves() showcased effective code reuse by using the functionalities of both rook and bishop moves. 
+
 ![queenMovePic](assets/queenMove.png)
+
     Additionally, the makeMove() and undoMove() methods were designed to be universally applicable for any chess piece, further enhancing code reuse. By reusing these functions, my code became more streamlined and maintainable, contributing to the overall robustness of the project.
 
 ### Code Smells
