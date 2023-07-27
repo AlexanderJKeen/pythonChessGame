@@ -151,7 +151,8 @@
     to step over or into various code which allowed me to inspect suspected bugs one line at a time. If you reach 
     a point where you believe the code is working correctly, you can continue execution. Using VS Code's debugging 
     tools in this way allowed me to systematically identify and resolve issues within the Chess Game code, ensuring 
-    a smoother and error-free gaming experience. This was helpful when assesing if variables where containing the correct information. One of the issues I ran into was during the 'getValidMove' function:
+    a smoother and error-free gaming experience. This was helpful when assesing if variables where containing the correct information. 
+    One of the issues I ran into was during the 'getValidMove' function:
 
 ![ValidMoveFunctionPic](assets/validMoveFunction.png)
 #
