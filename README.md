@@ -116,10 +116,10 @@
     although non-comercial should get the same level of professionalism. Rather than creating seperate tickets for the 
     refactoring process I would then move tickets back to the doing list when I was refactoring that code. This, although
     successful I believe would have been confusing if I was working with other developers and therfore if I  were to do 
-    this again I would have created seperate tickets for each refactor. I  
+    this again I would have created seperate tickets for each refactor.  
 
 ### C. Phase 2 development: tasks, code review and changes
     
-    Phase 2 was the organisation of my code. I was determined to refactor my code to create an MVC approach and so first 
-    split the code into the view, model and then controller. As discussed earlier in this read me I split all graphical 
-    methods and constants into the view file such as the drawBoard() and highlightSquare().
+    Phase 2 was the organisation of my code. I was determined to refactor my code to create an MVC approach and 
+    so first split the code into the view, model and then controller. As discussed earlier in this read me I 
+    split all graphical methods and constants into the view file such as the drawBoard() and highlightSquare().
