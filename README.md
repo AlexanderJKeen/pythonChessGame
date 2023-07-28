@@ -168,6 +168,7 @@
 # 3. Evaluation
 
 ### Code Refactoring
+
     In my MVC Chess project, I applied effective code refactoring techniques to improve the overall code design, 
     readability, and maintainability. One key example of code refactoring was the use of a dictionary 
     (self.moveFunctions) to map each piece type to its corresponding move function. This approach made the 
@@ -178,6 +179,7 @@
     These refactoring strategies greatly enhanced the clarity and modularity of my code.
 
 ### Code Reuse
+
     Throughout the MVC Chess project, I endevoured to reuse code helping minimise redundancy and improve efficiency. 
     For instance, I implemented methods like getRookMoves() and getBishopMoves() to calculate legal moves for 
     both the rook and bishop pieces. 
