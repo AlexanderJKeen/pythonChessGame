@@ -167,7 +167,7 @@ back for a final check on the state of play.
 
 # 3. Evaluation
 
-### A . Code Refactoring
+### A1 . Code Refactoring
 
 In my MVC Chess project, I applied effective code refactoring techniques to improve the overall code design, 
 readability, and maintainability. One key example of code refactoring was the use of a dictionary 
@@ -178,7 +178,7 @@ Another successful refactoring was the use of dictionary comprehensions to creat
 which efficiently mapped rank and file values between the board representation and chess notation. 
 These refactoring strategies greatly enhanced the clarity and modularity of my code.
 
-### A .Code Reuse
+### A2 .Code Reuse
 
 Throughout the MVC Chess project, I endevoured to reuse code helping minimise redundancy and improve efficiency. 
 For instance, I implemented methods like getRookMoves() and getBishopMoves() to calculate legal moves for 
@@ -192,7 +192,7 @@ Additionally, the makeMove() and undoMove() methods were designed to be universa
 further enhancing code reuse. By reusing these functions, my code became more streamlined and maintainable, 
 contributing to the overall robustness of the project.
 
-### A . Code Smells
+### A3 . Code Smells
 
 As a developer working on the MVC Chess project, I find code quality and maintainability crucial for 
 the success of the application. To ensure these aspects, I rely on various tools, with Pylint being a 
@@ -225,6 +225,88 @@ considered:
 
 ![polymorphism example](assets/polymorphism.png)
 
-### Featuresshowcase and embedded innovations
+### Features showcase and embedded innovations
+
+In my chess game code project, I have implemented several key features and innovative functionalities 
+to create an engaging and user-friendly experience. One notable feature is the Model,View and Controller, 
+which creates a separation of concerns and enhances code organization. This design 
+pattern allows me to easily manage the game's logic (Model), user interface (View), and user input 
+handling (Controller). 
+
+Furthermore, I have utilized object-oriented programming (OOP) to encapsulate data and behavior 
+within classes, as mentioned earlier. This OOP approach promotes code reusability and extensibility. 
+An excellent example of this is the use of polymorphism to calculate valid moves for each piece type. 
+The 'getAllPossibleMoves' method dynamically dispatches the move calculation to the specific piece's 
+move function
+
+Another standout feature is the implementation of an undo functionality. Players can undo their 
+moves by invoking the undoMove method in the GameModel class. This innovation leverages a stack-like 
+mechanism, allowing players to revert their last move and provides a safeguard against accidental mistakes. 
+The undo feature enhances user experience and showcases the power of Python's list operations to manage 
+move history efficiently.
+
+![undo function](assets/undoFunction.png)
+
+Additionally, I have incorporated a graphical user interface using the Pygame library. 
+The GameView class renders the chessboard and pieces on the screen, creating an intuitive and 
+visually appealing interface. Players can interact with the board through mouse clicks, and 
+highlighted squares display valid moves when selecting a piece. This GUI enriches the gaming
+experience and provides players with a user-friendly platform to enjoy the game.
+
+![Pygame Example](assets/pygameExample.png)
+
+These features collectively highlight the best aspects of my code, ensuring a comprehensive and 
+enjoyable chess game.
+
+
+### Improved algorithms – research, design, implementation, and tested confirmation.
+
+When designing the game I spent very little time on the structure and more on getting a working app. 
+This became a big issue as my code was, although functional, was challenging to manage and maintain.
+When I finally refactored the code to the MVC architecture, The Gamestate class now serves as the Model, 
+responsible for storing the current state of the chess game and determining valid moves. The index.py 
+file handles the View and Controller aspects, taking care of user input, graphical display, and 
+coordinating with the Gamestate model.
+
+Before MVC:
+
+![Previous Design](assets/previousDesign.png)
+
+
+And Now:
+
+![MVC Example](assets/MVCPic.png)
+
+Through my research I found dictionaries and as I have shown throughout this read me I make use of one to 
+avoid very long if statements. This dictionary make my code more readable and easier to manage.
+
+My initial Idea:
+
+if (turn == "w" and self.whiteToMove) or (turn == "b" and not self.whiteToMove):
+                    piece = self.board[row][col][1]
+                    if piece == "P":
+                        self.getPawnMoves(row, col, moves)
+                    elif piece == "R":
+                        self.getRookMoves(row, col, moves)
+                    elif piece == "N":
+                        self.getKnightMoves(row, col, moves)
+                    elif piece == "B":
+                        self.getBishopMoves(row, col, moves)
+                    elif piece == "Q":
+                        self.getQueenMoves(row, col, moves)
+                    elif piece == "K":
+                        self.getKingMoves(row, col, moves)
+
+this, although functionable would have took up unnecessary space and if I was to continue in this mindset I 
+may have created something unreadable and unmanageable. However, after finding the dictionary feature
+I decided to use that instead. 
+
+Dictionary:
+
+![dictionary](assets/dictionary.png)
+
+### Reflective review, opportunities to improve and continued professional development.
+
+
 
 

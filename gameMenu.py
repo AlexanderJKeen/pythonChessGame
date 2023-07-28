@@ -33,12 +33,18 @@ class GameMenu:
     def getUserInput(self):
         for event in p.event.get():
             if event.type == p.QUIT:
+                # The user closed the game window
                 return "quit"
             elif event.type == p.KEYDOWN:
+                # Check for keyboard input (arrow keys and Enter key)
                 if event.key == p.K_UP:
+                    # Move the selection up to the previous menu option
                     self.selectedOption = (self.selectedOption - 1) % len(self.menuOptions)
                 elif event.key == p.K_DOWN:
+                    # Move the selection down to the next menu option
                     self.selectedOption = (self.selectedOption + 1) % len(self.menuOptions)
                 elif event.key == p.K_RETURN:
+                    # Return the selected menu option when the Enter key is pressed
                     return self.menuOptions[self.selectedOption]
+        # If no relevant user input events were detected, return None
         return None

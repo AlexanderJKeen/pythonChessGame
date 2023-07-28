@@ -2,6 +2,7 @@
 import pygame as p
 
 class GameView:
+    # Initializes the GameView object with default settings and properties.
     def __init__(self):
         self.WIDTH = self.HEIGHT = 900
         self.DIMENSION = 8
@@ -12,11 +13,13 @@ class GameView:
         self.clock = None
 
     def loadImages(self):
+        # Loads and scales chess piece images from the 'assets' folder.
         pieces = ["wP", "bP", "wR", "bR", "wB", "bB", "wN", "bN", "wQ", "bQ", "wK", "bK"]
         for piece in pieces:
             self.IMAGES[piece] = p.transform.scale(p.image.load("assets/" + piece + ".png"), (self.SQ_SIZE, self.SQ_SIZE))
 
     def initialize(self):
+        # Initializes the Pygame library, sets the screen and clock, and loads chess piece images.
         p.init()
         self.screen = p.display.set_mode((self.WIDTH, self.HEIGHT))
         self.clock = p.time.Clock()
@@ -24,6 +27,7 @@ class GameView:
         self.loadImages()
 
     def drawBoard(self):
+        # Draws the chessboard with alternating light and dark squares.
         colours = [p.Color("white"), p.Color("light gray")]
         for row in range(self.DIMENSION):
             for col in range(self.DIMENSION):
@@ -31,6 +35,7 @@ class GameView:
                 p.draw.rect(self.screen, colour, p.Rect(col * self.SQ_SIZE, row * self.SQ_SIZE, self.SQ_SIZE, self.SQ_SIZE))
 
     def highlightSquare(self, screen, gamesState, validMoves, sqSelected, board):
+        # Highlights the selected square and available moves on the chessboard.
         if sqSelected != ():
             row, col = sqSelected
             # sqSelected is a piece that can be moved
@@ -53,6 +58,7 @@ class GameView:
                         screen.blit(s, (move.endCol*self.SQ_SIZE, move.endRow * self.SQ_SIZE))
 
     def drawPieces(self, board):
+        # The 2D array representing the chessboard and its pieces
         for row in range(self.DIMENSION):
             for col in range(self.DIMENSION):
                 piece = board[row][col]
@@ -60,8 +66,14 @@ class GameView:
                     self.screen.blit(self.IMAGES[piece], p.Rect(col * self.SQ_SIZE, row * self.SQ_SIZE, self.SQ_SIZE, self.SQ_SIZE))
 
     def drawText(self, text):
+         # Create a font object with the specified settings
         font = p.font.SysFont('Helvetica', 32, True, True)
+    #   text: The text to be displayed.
+    #   antialias: Determines if anti-aliasing should be applied to the text (True for smoother edges, False for sharper edges).
+    #   color: The color of the text.
         textObject = font.render(text, 0, p.Color('black'))
+        # Create a rectangle representing the location and size of the text on the screen
+    # The text will be centered horizontally and vertically on the screen
         textLocation = p.Rect(0, 0, self.WIDTH, self.HEIGHT).move(self.WIDTH/2 - textObject.get_width()/2, self.HEIGHT/2 - textObject.get_height()/2)
         self.screen.blit(textObject, textLocation)
 
@@ -83,15 +95,16 @@ class GameView:
                 return "quit"
             elif event.type == p.MOUSEBUTTONDOWN:
                 location = p.mouse.get_pos()
+                # Calculate the column index of the clicked square
                 col = location[0] // self.SQ_SIZE
+                 # Calculate the row index of the clicked square a double / is used as python default divides to a decimal but if you 
+                 # // the divide will always be an int.
                 row = location[1] // self.SQ_SIZE
                 return row, col
+            # The user pressed the "Z" key on the keyboard
             elif event.type == p.KEYDOWN:
                 if event.key == p.K_z:
                     return "undo"
-            elif event.type == p.KEYDOWN:
-                if event.key == p.K_r:
-                    return "reset"
-            
+        # If no relevant user input events were detected, return None
         return None
     

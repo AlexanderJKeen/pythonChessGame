@@ -96,19 +96,22 @@ class GameModel:
     def movePiece(self, start_square, end_square):
         start_row, start_col = start_square
         end_row, end_col = end_square
-
+        # Get the piece at the starting square
         piece = self.board[start_row][start_col]
-
+        # If there is no piece at the starting square, return None (no piece to move)
         if piece == "--":
             return None
-
+        # Check if the piece belongs to the current player's color
         if (self.whiteToMove and piece[0] != 'w') or (not self.whiteToMove and piece[0] != 'b'):
             return None
-
+        # Create a Move object to represent the intended move
         move = Move(start_square, end_square, self.board)
+        # Get the list of valid moves for the current game state
         moves = self.getValidMoves()
+        # If the move is in the list of valid moves, return the Move object representing the move
         if move in moves:
             return move
+        # If the move is not valid, return None
         return None
     
     def isValidSquare(self, row, col):
@@ -121,13 +124,19 @@ class GameModel:
             return self.squareUnderAttack(self.blackKingLocation[0], self.blackKingLocation[1])
         
     def squareUnderAttack(self, row, col):
+        # Temporarily switch the current player's turn to the opponent's turn
         self.whiteToMove = not self.whiteToMove
+        # Generate all possible moves for the opponent's turn
         opponentsMoves = self.getAllPossibleMoves()
+        # Switch the player's turn back to the original state
         self.whiteToMove = not self.whiteToMove
+        # Check if any of the opponent's moves target the specified square
         for move in opponentsMoves:
             if move.endRow == row and move.endCol == col:
+                # The square is under attack
                 return True
-        return False 
+        # If none of the opponent's moves target the square, it is safe
+        return False
         
                 
     def getAllPossibleMoves(self):
