@@ -219,8 +219,9 @@
 
     I have the Move class representing a chess move. The 'GameModel' class has different 
     methods like getBishopMoves, getRookMoves, 'getQueenMoves', and 'getKingMoves', each handling moves specific 
-    to a particular piece. However, when generating all valid moves, I use the 'movePiece' method, which, 
-    thanks to polymorphism, uniformly invokes the relevant move methods based on the piece being considered:
+    to a particular piece. However, when generating all possible valid moves, I use the 'getAllPossibleMoves' 
+    method, which, thanks to polymorphism, uniformly invokes the relevant move methods based on the piece being 
+    considered:
 
 ![polymorphism example](assets/polymorphism.png)
 
