@@ -167,7 +167,7 @@
 
 # 3. Evaluation
 
-### Code Refactoring
+### A . Code Refactoring
 
     In my MVC Chess project, I applied effective code refactoring techniques to improve the overall code design, 
     readability, and maintainability. One key example of code refactoring was the use of a dictionary 
@@ -178,7 +178,7 @@
     which efficiently mapped rank and file values between the board representation and chess notation. 
     These refactoring strategies greatly enhanced the clarity and modularity of my code.
 
-### Code Reuse
+### A .Code Reuse
 
     Throughout the MVC Chess project, I endevoured to reuse code helping minimise redundancy and improve efficiency. 
     For instance, I implemented methods like getRookMoves() and getBishopMoves() to calculate legal moves for 
@@ -192,10 +192,35 @@
     further enhancing code reuse. By reusing these functions, my code became more streamlined and maintainable, 
     contributing to the overall robustness of the project.
 
-### Code Smells
+### A . Code Smells
 
-    I noticed that the getAllPossibleMoves() method had a high cyclomatic complexity due to nested loops and conditionals. 
-    To enhance its maintainability, I took the initiative to refactor this method and simplify its structure. 
-    I also made a conscious effort to improve variable naming and method descriptions to enhance the overall code 
-    readability and comprehension. By addressing these code smells, I was able to ensure that my project's codebase 
-    remained robust, efficient, and maintainable.
+    As a developer working on the MVC Chess project, I find code quality and maintainability crucial for 
+    the success of the application. To ensure these aspects, I rely on various tools, with Pylint being a 
+    key asset in my arsenal. Pylint, a powerful static code analysis tool, helps me identify potential code 
+    smells, enforce adherence to the PEP 8 style guide, and maintain consistency throughout the project.
+    By incorporating Pylint and following its recommendations in the MVC Chess project, I can confidently 
+    identify and address potential code smells, ensuring that the codebase remains clean, maintainable, and 
+    adheres to the good codeing practices I mentioned earlier.
+
+### B. Advanced programming principles
+
+    One of the programmin principles I used quite frequently is encapsulation, The 'GameController' 
+    class encapsulates the game logic and control flow. It abstracts the interactions between the 
+    model and view, allowing them to communicate through its methods:
+
+![Encapsulation example](assets/encapsulation.png)
+
+    When it comes to abstraction the GameModel class exhibits abstraction by providing separate methods 
+    for each piece's movement logic, abstracting away the complexities. Abstraction involves hiding 
+    implementation details and presenting only relevant information to the user which is demonstarted
+    here:
+
+![Abstraction example](assets/abstraction.png)
+
+    I have the Move class representing a chess move. The 'GameModel' class has different 
+    methods like getBishopMoves, getRookMoves, 'getQueenMoves', and 'getKingMoves', each handling moves specific 
+    to a particular piece. However, when generating all valid moves, I use the 'movePiece' method, which, 
+    thanks to polymorphism, uniformly invokes the relevant move methods based on the piece being considered:
+
+![polymorphism example](assets/polymorphism.png)
+
