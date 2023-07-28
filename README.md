@@ -307,6 +307,62 @@ Dictionary:
 
 ### Reflective review, opportunities to improve and continued professional development.
 
+On reflection, one strength of my code lies in its efficient use of dictionaries to represent the chess pieces and 
+their movements. By mapping each piece to its corresponding move function, the code becomes concise and 
+readable, example can be seen above. Additionally, the code demonstrates good use of conditional statements and 
+loops to handle valid moves and game rules. For instance, the 'getValidMoves' method effectively generates all 
+possible moves and filters out illegal moves by considering the opponent's moves and potential checks on the king.
+
+As demonstrated here:
+
+![getValidMoves](assets/validMoveFunction.png)
+
+![inCheck&squareUnderAttack](assets/squareUnderAttack.png)
+
+The code also features a simple yet functional graphical user interface using the Pygame library. 
+The 'GameView' class effectively loads chess piece images, draws the chessboard, highlights squares, and 
+updates the display. The implementation of the menu system (GameMenu) further enhances the user experience, 
+allowing users to start a new game or quit the application.
+
+![menu](assets/menu.png)
+
+When it comes to improvements I feel although my documentation is helpful it is still lacking and and the 
+code could benifit from enhanced code documentation to help with its readability for both current developers 
+and any future developers should there be any.
+
+I would also look to incorperate type hints into my project, as can be seen in the python documentation 
+https://docs.python.org/3/library/typing.html. Type hints would provide more clarity on function arguments and 
+return types, assisting in code maintenance and reducing the chances of bugs caused by type-related issues.
+
+For professional development, I would consider refactoring the codebase to conform to a more consistent coding 
+style, following popular Python style guides like PEP 8, examples can be found here: 
+https://peps.python.org/pep-0008/. When I am working we follow the psr-12 (https://www.php-fig.org/psr/psr-12/) 
+guidelines as well as others such as doctrine (https://github.com/doctrine/coding-standard). Using these coding 
+standards not only do we manage to keep every member of the company coding in the same way but it makes it 
+easier to share tasks if everyone is deigning in a similar way. This makes refactoring and reading of code 
+easier than if we allowed each developer to write using there own coding standards. 
+
+To challenge myself further, I could explore additional chess features, such as castling, en passant. I would 
+look at my current pawn promotion structure and make it possible for the user to pick which piece they would 
+like to promote thier pawn to as opposed to defaulting them to the most efficient choice. 
+
+![Pawn Promotion Flag](assets/pawnPromotionFlag.png)
+![Pawn Promotion](assets/pawnPromotion.png)
 
 
+Additionally, I would seek opportunities to optimize the code for better performance. Profiling the 
+code and identifying bottlenecks would allow me to make targeted optimizations, resulting in a more 
+responsive and efficient chess engine.
 
+I would then look to add an AI component to my game which would allow me to create a PvE version of my game.
+This would require further tuning of my 'allPossibleMoves' function to allow the AI to think multiple steps 
+ahead instead of the one my current computations allow. I would like to incorperate websockets into the project 
+to allow for multiplayer across different machines.
+
+Given the time this could also be refactored to support 4d chess allowing for myself or another coder to experiment
+more with the borders of the chess board which I have, at the moment have the game monitoring and blocking pieces from
+moving beyond.
+
+Using the OOP's as well as the MVC architecture I have created a great platform from which to take this
+project to the 'next level' and with the seperation of concerns I have attemped to create I belive that 
+improvements of a small nature or a bigger overhaul refactor would be easy to achieve.
