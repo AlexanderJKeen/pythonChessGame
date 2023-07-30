@@ -13,48 +13,47 @@ class GameController:
         while running:
             self.view.drawGameState(self.model, selectedSquare, self.model.board)
 
-            if self.model.checkMate:
                 # Check if the game is in a checkmate or stalemate state and display the appropriate message
-                if self.model.checkMate:
-                    if self.model.whiteToMove:
-                        self.view.drawText("Checkmate! Black wins")
-                    else:
-                        self.view.drawText("Checkmate! White wins")
-                elif self.model.staleMate:
-                    self.view.drawText("Stalemate!")
+            if self.model.checkMate:
+                if self.model.whiteToMove:
+                    self.view.drawText("Checkmate! Black wins")
+                else:
+                    self.view.drawText("Checkmate! White wins")
+            elif self.model.staleMate:
+                self.view.drawText("Stalemate!")
 
                 # Update the display to show the current game state and messages
-                self.view.updateDisplay()
+            self.view.updateDisplay()
 
                 # Get user input from the GameView object
-                userInput = self.view.getUserInput()
+            userInput = self.view.getUserInput()
 
                 # Process user input based on the action requested
-                if userInput == "quit":
+            if userInput == "quit":
                     # Quit the game loop if the player wants to quit
-                    running = False
-                elif userInput == "undo":
+                running = False
+            elif userInput == "undo":
                     # Undo the last move if the player requests to undo
-                    self.model.undoMove()
-                elif userInput == "reset":
+                self.model.undoMove()
+            elif userInput == "reset":
                     # Create a new instance of GameModel to reset the board if the player requests a game reset
-                    self.model = GameModel()
-                    selectedSquare = None
-                elif isinstance(userInput, tuple):
+                self.model = GameModel()
+                selectedSquare = None
+            elif isinstance(userInput, tuple):
                     # If the user clicks on a square, handle piece selection and movement logic
-                    row, col = userInput
-                    if self.model.isValidSquare(row, col):
-                        if selectedSquare:
-                            # If a piece is already selected, attempt to move it to the clicked square
-                            move = self.model.movePiece(selectedSquare, (row, col))
-                            if move:
-                                # If the move is valid, make the move on the GameModel
-                                self.model.makeMove(move)
-                            selectedSquare = None
-                        else:
-                            # If no piece is selected, set the clicked square as the selected square
-                            selectedSquare = (row, col)
-                    else:
-                        # If an invalid square is clicked, deselect the selected square
+                row, col = userInput
+                if self.model.isValidSquare(row, col):
+                    if selectedSquare:
+                        # If a piece is already selected, attempt to move it to the clicked square
+                        move = self.model.movePiece(selectedSquare, (row, col))
+                        if move:
+                            # If the move is valid, make the move on the GameModel
+                            self.model.makeMove(move)
                         selectedSquare = None
+                    else:
+                        # If no piece is selected, set the clicked square as the selected square
+                        selectedSquare = (row, col)
+                else:
+                    # If an invalid square is clicked, deselect the selected square
+                    selectedSquare = None
 

@@ -105,6 +105,9 @@ class GameView:
             elif event.type == p.KEYDOWN:
                 if event.key == p.K_z:
                     return "undo"
+            elif event.type == p.KEYDOWN:
+                if event.key == p.K_r:
+                    return "reset"
         # If no relevant user input events were detected, return None
         return None
     
