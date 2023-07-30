@@ -35,10 +35,6 @@ class GameController:
             elif userInput == "undo":
                     # Undo the last move if the player requests to undo
                 self.model.undoMove()
-            elif userInput == "reset":
-                    # Create a new instance of GameModel to reset the board if the player requests a game reset
-                self.model = GameModel()
-                selectedSquare = None
             elif isinstance(userInput, tuple):
                     # If the user clicks on a square, handle piece selection and movement logic
                 row, col = userInput
